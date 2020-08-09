@@ -1,0 +1,35 @@
+server:
+  port: ${port:9091}
+spring:
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/mac
+    username: root
+    password: wj745521
+  application:
+    name: user-service
+mybatis:
+  type-aliases-package: com.user.pojo
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://127.0.0.1:8761/eureka
+#  服务提供者在启动时，会检测配置属性中的： eureka.client.register-with-erueka=true 参数是否正确，事实上
+#  默认就是true。如果值确实为true，则会向EurekaServer发起一个Rest请求，并携带自己的元数据信息，Eureka
+#  Server会把这些信息保存到一个双层Map结构中。
+#  第一层Map的Key就是服务id，一般是配置中的 spring.application.name 属性
+#  第二层Map的key是服务的实例id。一般host+ serviceId + port，例如： localhost:user-service:8081
+#  值则是服务的实例对象，也就是说一个服务，可以同时启动多个不同实例，形成集群。
+  instance:
+    #  默认注册时使用的是主机名或者localhost，建议使用ip进行注册
+    ip-address: 127.0.0.1
+    prefer-ip-address: true
+#    服务注册完成以后，会每隔一定时间向eureka服务中心发送心跳，并在一定的时间后没有发送心跳后被eureka剔除。
+#    自我保护机制的工作机制是如果在15分钟内超过85%的客户端节点都没有正常的心跳，那么Eureka就认为客户端与注册中心出现了网络故障，
+#    Eureka Server自动进入自我保护机制，不会剔除服务。
+
+    lease-expiration-duration-in-seconds: 90 #若90秒都没有心跳则认为服务失效 会定时从服务中剔除
+    lease-renewal-interval-in-seconds: 30 #每隔30秒向eureka发送一次心跳
+
+

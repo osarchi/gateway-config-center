@@ -31,5 +31,5 @@ eureka:
 
     lease-expiration-duration-in-seconds: 90 #若90秒都没有心跳则认为服务失效 会定时从服务中剔除
     lease-renewal-interval-in-seconds: 30 #每隔30秒向eureka发送一次心跳
-
-
+test:
+  name: nate
